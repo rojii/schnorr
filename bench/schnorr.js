@@ -8,11 +8,12 @@ const bench = require('./bench');
 {
   const end = bench('verification');
   const msg = hash256.digest(Buffer.from('schnorr', 'ascii'));
-  const key = secp256k1.privateKeyGenerate();
-  const pub = secp256k1.publicKeyCreate(key, true);
-  const sig = schnorr.sign(msg, key);
 
-  for (let i = 0; i < 10000; i++)
+  for (let i = 0; i < 10000; i++) {
+    const key = secp256k1.privateKeyGenerate();
+    const pub = secp256k1.publicKeyCreate(key, true);
+    const sig = schnorr.sign(msg, key);
     schnorr.verify(msg, sig, pub);
-    end(10000);
+  }
+  end(10000);
 }
